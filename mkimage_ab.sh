@@ -8,6 +8,7 @@ TARGET_PRODUCT=`get_build_var TARGET_PRODUCT`
 TARGET_HARDWARE=`get_build_var TARGET_BOARD_HARDWARE`
 TARGET_BOARD_PLATFORM=`get_build_var TARGET_BOARD_PLATFORM`
 TARGET_DEVICE_DIR=`get_build_var TARGET_DEVICE_DIR`
+TARGET_PREBUILT_RESOURCE=`get_build_var TARGET_PREBUILT_RESOURCE`
 PLATFORM_VERSION=`get_build_var PLATFORM_VERSION`
 PLATFORM_SECURITY_PATCH=`get_build_var PLATFORM_SECURITY_PATCH`
 TARGET_ARCH_VARIANT=`get_build_var TARGET_ARCH_VARIANT`
@@ -98,7 +99,7 @@ else
 echo "BOARD_AVB_ENABLE is false, make boot.img from kernel && out."
     [ -d $OUT/recovery/root ] && \
     mkbootfs -d $OUT/system $OUT/recovery/root | minigzip > $OUT/ramdisk-recovery.img && \
-    mkbootimg --kernel $KERNEL_DEBUG --ramdisk $OUT/ramdisk-recovery.img --second kernel/resource.img --os_version $PLATFORM_VERSION --header_version $BOARD_BOOTIMG_HEADER_VERSION --os_patch_level $PLATFORM_SECURITY_PATCH --cmdline "$ROCKCHIP_RECOVERYIMAGE_CMDLINE_ARGS" --output $OUT/boot.img && \
+    mkbootimg --kernel $KERNEL_DEBUG --ramdisk $OUT/ramdisk-recovery.img --second $TARGET_PREBUILT_RESOURCE --os_version $PLATFORM_VERSION --header_version $BOARD_BOOTIMG_HEADER_VERSION --os_patch_level $PLATFORM_SECURITY_PATCH --cmdline "$ROCKCHIP_RECOVERYIMAGE_CMDLINE_ARGS" --output $OUT/boot.img && \
     cp -a $OUT/boot.img $IMAGE_PATH/boot.img
 fi
 echo "done."

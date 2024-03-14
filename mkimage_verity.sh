@@ -6,6 +6,7 @@ set -e
 export PATH=$ANDROID_BUILD_PATHS:$PATH
 TARGET_PRODUCT=`get_build_var TARGET_PRODUCT`
 TARGET_HARDWARE=`get_build_var TARGET_BOARD_HARDWARE`
+TARGET_PREBUILT_RESOURCE=`get_build_var TARGET_PREBUILT_RESOURCE`
 echo TARGET_PRODUCT=$TARGET_PRODUCT
 echo TARGET_HARDWARE=$TARGET_HARDWARE
 TARGET="withoutkernel"
@@ -54,7 +55,7 @@ then
 	echo -n "create boot.img with kernel... "
 	[ -d $OUT/root ] && \
 	mkbootfs $OUT/root | minigzip > $OUT/ramdisk.img && \
-	mkbootimg --kernel $OUT/kernel --ramdisk $OUT/ramdisk.img --second kernel/resource.img --output $OUT/boot.img && \
+	mkbootimg --kernel $OUT/kernel --ramdisk $OUT/ramdisk.img --second $TARGET_PREBUILT_RESOURCE --output $OUT/boot.img && \
 	cp -a $OUT/boot.img $IMAGE_PATH/
 	echo "done."
 else
@@ -69,7 +70,7 @@ then
 	echo -n "create recovery.img with kernel... "
 	[ -d $OUT/recovery/root ] && \
 	mkbootfs $OUT/recovery/root | minigzip > $OUT/ramdisk-recovery.img && \
-	mkbootimg --kernel $OUT/kernel --ramdisk $OUT/ramdisk-recovery.img --second kernel/resource.img  --output $OUT/recovery.img && \
+	mkbootimg --kernel $OUT/kernel --ramdisk $OUT/ramdisk-recovery.img --second $TARGET_PREBUILT_RESOURCE  --output $OUT/recovery.img && \
 	cp -a $OUT/recovery.img $IMAGE_PATH/
 	echo "done."
 else

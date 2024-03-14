@@ -94,5 +94,3 @@ genfscon sysfs /devices/platform/10500000.nandc                                 
 genfscon sysfs /devices/platform/1021c000.dwmmc                                                     u:object_r:sysfs_mmc:s0
 # rk3399
 genfscon sysfs /devices/platform/fe330000.sdhci                                                     u:object_r:sysfs_mmc:s0
-
-genfscon fuseblk / u:object_r:fuseblk:s0

@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include vendor/rockchip/common/BoardConfigVendor.mk
 ifeq ($(strip $(TARGET_ARCH)), arm64)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 endif
@@ -65,9 +64,6 @@ PRODUCT_PACKAGES += \
 ########################################################
 # Kernel
 ########################################################
-PRODUCT_COPY_FILES += \
-    $(TARGET_PREBUILT_KERNEL):kernel
-
 #SDK Version
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.rksdk.version=RK30_ANDROID$(PLATFORM_VERSION)-SDK-v1.00.00
@@ -77,20 +73,6 @@ PRODUCT_PACKAGES += \
     fsck.f2fs \
     mkfs.f2fs \
     fsck_f2fs
-
-# PCBA tools
-ifeq ($(strip $(TARGET_ROCKCHIP_PCBATEST)), true)
-PRODUCT_PACKAGES += \
-    pcba_core \
-    bdt
-PRODUCT_COPY_FILES += \
-   vendor/rockchip/common/wifi/iwconfig:$(PRODUCT_OUT)/$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/iwconfig \
-   vendor/rockchip/common/wifi/iwlist:$(PRODUCT_OUT)/$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/iwlist \
-   bootable/recovery/pcba_core/rkhal3_camera/media-ctl:$(PRODUCT_OUT)/$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/media-ctl \
-   $(TARGET_DEVICE_DIR)/bt_vendor.conf:$(PRODUCT_OUT)/$(TARGET_COPY_OUT_RECOVERY)/root/pcba/bt_vendor.conf \
-   $(call find-copy-subdir-files,*,bootable/recovery/pcba_core/res,$(PRODUCT_OUT)/$(TARGET_COPY_OUT_RECOVERY)/root/pcba) \
-   $(call find-copy-subdir-files,"*.ko",$(TOPDIR)kernel/drivers/net/wireless/rockchip_wlan,$(PRODUCT_OUT)/$(TARGET_COPY_OUT_RECOVERY)/root/pcba/lib/modules)
-endif
 
 # librkskia
 PRODUCT_PACKAGES += \
@@ -795,10 +777,6 @@ PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-impl \
     android.hardware.bluetooth@1.0-service \
     android.hardware.bluetooth@1.0-service.rc
-
-ifeq ($(strip $(BOARD_HAVE_BLUETOOTH_RTK)), true)
-include hardware/realtek/rtkbt/rtkbt.mk
-endif
 
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)), box)
     include device/rockchip/common/samba/rk31_samba.mk
