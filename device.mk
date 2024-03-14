@@ -1160,9 +1160,6 @@ AB_OTA_POSTINSTALL_CONFIG += \
 
 endif
 
-#TWRP
-BOARD_TWRP_ENABLE ?= false
-
 #Build with UiMode Config
 PRODUCT_COPY_FILES += \
     device/rockchip/common/uimode/package_uimode_config.xml:vendor/etc/package_uimode_config.xml
