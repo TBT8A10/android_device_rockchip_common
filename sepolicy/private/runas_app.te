@@ -1,1 +1,0 @@
-allow runas_app self:perf_event { open read write kernel };
